@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.michaeludjiawan.moviedb.BuildConfig
 import com.michaeludjiawan.moviedb.data.api.ApiService
-import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -14,18 +13,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 val networkModule = module {
     single { createAuthTokenInterceptor() }
 
-    single { createOkHttpClient(get(), get()) }
+    single { createOkHttpClient(get()) }
     single { createGson() }
 
     single { createWebService<ApiService>(get(), get()) }
 }
 
 fun createOkHttpClient(
-    authTokenInterceptor: Interceptor,
-    connectionSpec: ConnectionSpec
+    authTokenInterceptor: Interceptor
 ): OkHttpClient {
     return OkHttpClient.Builder()
-        .connectionSpecs(arrayListOf(connectionSpec, ConnectionSpec.CLEARTEXT))
         .addInterceptor(authTokenInterceptor)
         .build()
 }
