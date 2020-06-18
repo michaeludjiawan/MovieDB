@@ -15,6 +15,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'BASE_URL', '"https://api.themoviedb.org/3/"'
+        buildConfigField 'String', 'API_KEY_V4', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDJjOWUzZTU5NWYxZTg1ZmE0MWM1ODM5ZTViMDU5MSIsInN1YiI6IjU5NDkyOWViOTI1MTQxM2ZiNjA1NDZmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8UAkdAoFcCVJdrr9pw0IxvncdWnt4i0y9bhgrV3RE8A"'
     }
 
     buildTypes {
@@ -35,4 +38,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation "com.squareup.retrofit2:retrofit:2.6.2"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.2"
+
+    implementation "org.koin:koin-android:2.0.1"
 }
