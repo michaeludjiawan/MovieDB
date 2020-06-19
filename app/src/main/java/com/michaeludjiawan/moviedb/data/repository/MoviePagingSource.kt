@@ -8,6 +8,7 @@ import com.michaeludjiawan.moviedb.data.safeApiCall
 import com.michaeludjiawan.moviedb.ui.movie.FilterType
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.*
 
 class MoviePagingSource(
     private val apiService: ApiService,
@@ -16,7 +17,7 @@ class MoviePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val position = params.key ?: 1
         return try {
-            val response = safeApiCall { apiService.getMovies(filterType.toString()) }
+            val response = safeApiCall { apiService.getMovies(filterType.toString().toLowerCase(Locale.US), position) }
             if (response is Result.Success) {
                 val movies = response.data?.movies.orEmpty()
                 LoadResult.Page(

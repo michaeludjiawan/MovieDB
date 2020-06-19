@@ -4,12 +4,14 @@ import com.michaeludjiawan.moviedb.data.model.Movie
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
     @GET("movie/{filter_type}")
     suspend fun getMovies(
-        @Path(value = "filter_type") filterType: String
+        @Path(value = "filter_type", encoded = true) filterType: String,
+        @Query("page") page: Int
     ): Response<MovieListResponse>
 
     @GET("movie/{movie_id}")

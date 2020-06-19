@@ -17,6 +17,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField 'String', 'BASE_URL', '"https://api.themoviedb.org/3/"'
+        buildConfigField 'String', 'BASE_URL_IMAGE', '"https://image.tmdb.org/t/p/"'
         buildConfigField 'String', 'API_KEY_V4', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDJjOWUzZTU5NWYxZTg1ZmE0MWM1ODM5ZTViMDU5MSIsInN1YiI6IjU5NDkyOWViOTI1MTQxM2ZiNjA1NDZmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8UAkdAoFcCVJdrr9pw0IxvncdWnt4i0y9bhgrV3RE8A"'
     }
 
@@ -35,6 +36,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "com.google.android.material:material:1.1.0"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -51,4 +53,9 @@ dependencies {
     implementation "androidx.paging:paging-runtime:3.0.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
+    implementation "com.github.bumptech.glide:glide:4.10.0"
+    kapt "com.github.bumptech.glide:compiler:4.10.0"
+
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0-rc01'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0-rc01'
 }

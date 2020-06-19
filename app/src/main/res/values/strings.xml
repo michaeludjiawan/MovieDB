@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MovieDB</string>
+    <string name="retry_btn_label">Retry</string>
+    <string name="category_btn_label">Category</string>
+    <string name="filter_type_popular">Popular</string>
+    <string name="filter_type_top_rated">Top Rated</string>
+    <string name="filter_type_upcoming">Upcoming</string>
+    <string name="filter_type_now_playing">Now Playing</string>
 </resources>
