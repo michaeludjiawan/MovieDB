@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.michaeludjiawan.moviedb.R
+import com.michaeludjiawan.moviedb.data.model.Movie
+import com.michaeludjiawan.moviedb.ui.common.BaseFragment
 import com.michaeludjiawan.moviedb.ui.common.FilterTypeBottomDialog
 import com.michaeludjiawan.moviedb.util.toVisibility
 import kotlinx.android.synthetic.main.movie_list_fragment.*
@@ -24,14 +26,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @ExperimentalCoroutinesApi
 @ExperimentalPagingApi
-class MovieListFragment : Fragment() {
+class MovieListFragment : BaseFragment() {
 
     private val viewModel by viewModel<MovieListViewModel>()
-    private val movieAdapter = MoviePagingAdapter()
 
     private val filterTypeDialog by lazy { FilterTypeBottomDialog() }
 
     private var getMoviesJob: Job? = null
+
+    private val onMovieClick: (Movie) -> Unit = {
+        val direction = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFragment(it.id, it.title)
+        findNavController().navigate(direction)
+    }
+
+    private val movieAdapter = MoviePagingAdapter(onMovieClick)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +51,8 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initDefaultToolbar(getString(R.string.app_name), showBackButton = false)
 
         initRecyclerView()
         initFilterDialog()

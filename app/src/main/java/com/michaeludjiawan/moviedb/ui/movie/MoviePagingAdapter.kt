@@ -14,14 +14,16 @@ import com.michaeludjiawan.moviedb.util.DateUtil
 import com.michaeludjiawan.moviedb.util.toImageUrl
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MoviePagingAdapter : PagingDataAdapter<Movie, RecyclerView.ViewHolder>(MOVIE_COMPARATOR) {
+class MoviePagingAdapter(
+    private val onItemClick: (Movie) -> Unit
+) : PagingDataAdapter<Movie, RecyclerView.ViewHolder>(MOVIE_COMPARATOR) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         getItem(position)?.let { (holder as MovieViewHolder).bind(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        MovieViewHolder.create(parent)
+        MovieViewHolder.create(parent, onItemClick)
 
     companion object {
         val MOVIE_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
@@ -32,7 +34,10 @@ class MoviePagingAdapter : PagingDataAdapter<Movie, RecyclerView.ViewHolder>(MOV
 
 }
 
-class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class MovieViewHolder(
+    private val view: View,
+    private val onItemClick: (Movie) -> Unit
+) : RecyclerView.ViewHolder(view) {
 
     fun bind(movie: Movie) {
         with(view) {
@@ -44,15 +49,18 @@ class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             tv_movie_title.text = movie.title
             tv_movie_release_date.text = DateUtil.format(movie.releaseDate)
             tv_movie_overview.text = movie.overview
+
+            setOnClickListener { onItemClick(movie) }
         }
     }
 
     companion object {
         fun create(
-            parent: ViewGroup
+            parent: ViewGroup,
+            onItemClick: (Movie) -> Unit
         ): MovieViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-            return MovieViewHolder(view)
+            return MovieViewHolder(view, onItemClick)
         }
     }
 

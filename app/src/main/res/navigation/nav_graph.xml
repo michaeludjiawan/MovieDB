@@ -6,5 +6,20 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.michaeludjiawan.moviedb.ui.movie.MovieListFragment"
-        android:label="MovieListFragment" />
+        android:label="MovieListFragment" >
+        <action
+            android:id="@+id/action_movieListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.michaeludjiawan.moviedb.ui.movie.detail.MovieDetailFragment"
+        android:label="{movieName}" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <argument
+            android:name="movieName"
+            app:argType="string" />
+    </fragment>
 </navigation>

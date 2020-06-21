@@ -3,8 +3,8 @@ package com.michaeludjiawan.moviedb.data
 import retrofit2.Response
 
 sealed class Result<out T : Any> {
-    data class Loading<out T : Any>(val data: T?) : Result<Nothing>()
-    data class Success<out T : Any>(val data: T?) : Result<T>()
+    data class Loading<out T : Any>(val data: T? = null) : Result<T>()
+    data class Success<out T : Any>(val data: T? = null) : Result<T>()
     data class Error(val throwable: Throwable) : Result<Nothing>()
 
     companion object {
