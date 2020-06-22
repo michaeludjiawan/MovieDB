@@ -10,12 +10,16 @@ import com.michaeludjiawan.moviedb.data.model.Movie
 import com.michaeludjiawan.moviedb.data.model.Review
 import com.michaeludjiawan.moviedb.data.safeApiCall
 import com.michaeludjiawan.moviedb.ui.movie.FilterType
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class MovieRepositoryImpl(
     private val apiService: ApiService,
-    private val movieDao: MovieDao
+    private val movieDao: MovieDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : MovieRepository {
 
     override fun getMovies(filter: FilterType): Flow<PagingData<Movie>> =
@@ -30,7 +34,7 @@ class MovieRepositoryImpl(
 
         val result = safeApiCall { apiService.getMovieDetail(movieId) }
         emit(result)
-    }
+    }.flowOn(dispatcher)
 
     override fun getReview(movieId: Int): Flow<PagingData<Review>> =
         Pager(
