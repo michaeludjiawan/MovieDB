@@ -8,4 +8,6 @@
     <string name="filter_type_now_playing">Now Playing</string>
     <string name="review_exist_label">Reviews</string>
     <string name="review_empty_label">No Reviews</string>
+    <string name="favorite_list_toolbar_title">Favorite Movie</string>
+    <string name="favorite_list_empty">No favorites yet.</string>
 </resources>

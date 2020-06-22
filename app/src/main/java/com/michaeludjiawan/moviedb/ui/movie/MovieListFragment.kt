@@ -1,9 +1,7 @@
 package com.michaeludjiawan.moviedb.ui.movie
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -58,6 +56,22 @@ class MovieListFragment : BaseFragment() {
         initFilterDialog()
 
         getMovies(FilterType.POPULAR)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        return inflater.inflate(R.menu.movie_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> {
+                val direction = MovieListFragmentDirections.actionMovieListFragmentToFavoriteListFragment()
+                findNavController().navigate(direction)
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initRecyclerView() {

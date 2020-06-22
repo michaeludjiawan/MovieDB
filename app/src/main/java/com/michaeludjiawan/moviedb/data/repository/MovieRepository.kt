@@ -14,4 +14,5 @@ interface MovieRepository {
     suspend fun saveAsFavorite(movie: Movie)
     suspend fun removeAsFavorite(movie: Movie)
     suspend fun getFavorite(movieId: Int): Movie?
+    fun getFavorites(): Flow<List<Movie>>
 }

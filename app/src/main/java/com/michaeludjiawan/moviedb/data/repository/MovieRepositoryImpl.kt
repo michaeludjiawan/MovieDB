@@ -41,4 +41,7 @@ class MovieRepositoryImpl(
     override suspend fun removeAsFavorite(movie: Movie) = movieDao.remove(movie)
 
     override suspend fun getFavorite(movieId: Int): Movie? = movieDao.getMovie(movieId)
+
+    override fun getFavorites(): Flow<List<Movie>> = movieDao.getMovies()
+
 }
