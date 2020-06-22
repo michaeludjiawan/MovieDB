@@ -20,7 +20,8 @@ class MovieDetailViewModel(
         liveData {
             emit(Result.Loading())
 
-            movieRepository.getDetail(movieId).collectLatest { result ->
+            movieRepository.getDetail(movieId)
+                .collectLatest { result: Result<Movie>? ->
                 if (result is Result.Success) {
                     resultMovie = result.data
                 }
