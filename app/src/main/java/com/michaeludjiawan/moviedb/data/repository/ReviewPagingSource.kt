@@ -15,7 +15,7 @@ class ReviewPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Review> {
         val position = params.key ?: 1
         return try {
-            val response = safeApiCall { apiService.getMovieReviews(movieId) }
+            val response = safeApiCall { apiService.getMovieReviews(movieId, position) }
             if (response is Result.Success) {
                 val reviews = response.data?.reviews.orEmpty()
                 LoadResult.Page(

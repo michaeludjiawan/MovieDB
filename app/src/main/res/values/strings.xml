@@ -6,4 +6,6 @@
     <string name="filter_type_top_rated">Top Rated</string>
     <string name="filter_type_upcoming">Upcoming</string>
     <string name="filter_type_now_playing">Now Playing</string>
+    <string name="review_exist_label">Reviews</string>
+    <string name="review_empty_label">No Reviews</string>
 </resources>
