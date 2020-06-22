@@ -1,12 +1,11 @@
 package com.michaeludjiawan.moviedb.ui.movie.detail
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.switchMap
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import com.michaeludjiawan.moviedb.data.Result
+import com.michaeludjiawan.moviedb.data.model.Movie
 import com.michaeludjiawan.moviedb.data.repository.MovieRepository
+import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
     private val movieRepository: MovieRepository
@@ -14,10 +13,18 @@ class MovieDetailViewModel(
 
     private val movieId = MutableLiveData<Int>()
 
+    private var resultMovie: Movie? = null
+
     val movie = switchMap(movieId) { movieId ->
         liveData {
             emit(Result.Loading())
-            emit(movieRepository.getDetail(movieId))
+
+            val result = movieRepository.getDetail(movieId)
+            if (result is Result.Success) {
+                resultMovie = result.data
+            }
+
+            emit(result)
         }
     }
 
@@ -33,6 +40,23 @@ class MovieDetailViewModel(
 
     fun refresh() {
         this.movieId.value = this.movieId.value
+    }
+
+    suspend fun isFavorite(): Boolean {
+        val movieId = movieId.value!!
+
+        val savedMovie = movieRepository.getFavorite(movieId)
+        return savedMovie != null
+    }
+
+    fun setFavorite(isFavorite: Boolean) = viewModelScope.launch {
+        val movie = resultMovie ?: throw IllegalStateException("No movie data.")
+
+        if (isFavorite) {
+            movieRepository.saveAsFavorite(movie)
+        } else {
+            movieRepository.removeAsFavorite(movie)
+        }
     }
 
 }

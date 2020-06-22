@@ -47,6 +47,7 @@ class MovieDetailFragment : BaseFragment() {
 
         initRecyclerView()
         initObservers()
+        initFavorite()
     }
 
     private fun initRecyclerView() {
@@ -124,6 +125,18 @@ class MovieDetailFragment : BaseFragment() {
                 reviewPagingAdapter.submitData(it)
             }
         })
+    }
+
+    private fun initFavorite() {
+        lifecycleScope.launch {
+            iv_movie_detail_fav.isSelected = viewModel.isFavorite()
+        }
+
+        iv_movie_detail_fav.setOnClickListener {
+            val nextState = !iv_movie_detail_fav.isSelected
+            iv_movie_detail_fav.isSelected = nextState
+            viewModel.setFavorite(nextState)
+        }
     }
 
     private fun loadData(movie: Movie) {

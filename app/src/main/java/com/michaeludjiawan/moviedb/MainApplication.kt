@@ -1,6 +1,8 @@
 package com.michaeludjiawan.moviedb
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import com.michaeludjiawan.moviedb.di.dataModule
 import com.michaeludjiawan.moviedb.di.featureModule
 import com.michaeludjiawan.moviedb.di.networkModule
 import org.koin.android.ext.koin.androidContext
@@ -15,10 +17,13 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
             modules(
                 listOf(
+                    dataModule,
                     networkModule,
                     featureModule
                 )
             )
         }
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 }

@@ -20,6 +20,8 @@ android {
         buildConfigField 'String', 'BASE_URL', '"https://api.themoviedb.org/3/"'
         buildConfigField 'String', 'BASE_URL_IMAGE', '"https://image.tmdb.org/t/p/"'
         buildConfigField 'String', 'API_KEY_V4', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDJjOWUzZTU5NWYxZTg1ZmE0MWM1ODM5ZTViMDU5MSIsInN1YiI6IjU5NDkyOWViOTI1MTQxM2ZiNjA1NDZmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8UAkdAoFcCVJdrr9pw0IxvncdWnt4i0y9bhgrV3RE8A"'
+
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -68,4 +70,9 @@ dependencies {
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0-rc01'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0-rc01'
+
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
 }

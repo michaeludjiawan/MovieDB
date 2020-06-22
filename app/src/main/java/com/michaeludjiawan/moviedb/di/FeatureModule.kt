@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val featureModule = module {
-    single<MovieRepository> { MovieRepositoryImpl(get()) }
+    single<MovieRepository> { MovieRepositoryImpl(get(), get()) }
 
     viewModel { MovieListViewModel(get()) }
     viewModel { MovieDetailViewModel(get()) }
