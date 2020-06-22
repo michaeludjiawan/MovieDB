@@ -5,6 +5,7 @@ import androidx.lifecycle.Transformations.switchMap
 import com.michaeludjiawan.moviedb.data.Result
 import com.michaeludjiawan.moviedb.data.model.Movie
 import com.michaeludjiawan.moviedb.data.repository.MovieRepository
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
@@ -19,12 +20,13 @@ class MovieDetailViewModel(
         liveData {
             emit(Result.Loading())
 
-            val result = movieRepository.getDetail(movieId)
-            if (result is Result.Success) {
-                resultMovie = result.data
-            }
+            movieRepository.getDetail(movieId).collectLatest { result ->
+                if (result is Result.Success) {
+                    resultMovie = result.data
+                }
 
-            emit(result)
+                emit(result)
+            }
         }
     }
 
@@ -58,5 +60,8 @@ class MovieDetailViewModel(
             movieRepository.removeAsFavorite(movie)
         }
     }
+
+    // Convenient method to check if data already loaded whether from local or remote
+    fun isLoaded() = resultMovie != null
 
 }

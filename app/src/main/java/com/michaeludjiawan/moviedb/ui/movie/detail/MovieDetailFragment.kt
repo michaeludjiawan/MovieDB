@@ -108,15 +108,21 @@ class MovieDetailFragment : BaseFragment() {
                     result.data?.let { loadData(it) }
                 }
                 is Result.Error -> {
-                    btn_movie_detail_retry.visibility = View.VISIBLE
-                    pb_movie_detail_progress_bar.visibility = View.GONE
-                    ll_movie_detail_content.visibility = View.GONE
+                    if (!viewModel.isLoaded()) {
+                        btn_movie_detail_retry.visibility = View.VISIBLE
+                        pb_movie_detail_progress_bar.visibility = View.GONE
+                        ll_movie_detail_content.visibility = View.GONE
+                    }
                 }
             }
         })
 
         btn_movie_detail_retry.setOnClickListener {
             viewModel.refresh()
+        }
+
+        btn_movie_detail_review_retry.setOnClickListener {
+            reviewPagingAdapter.retry()
         }
 
         viewModel.reviews.observe(viewLifecycleOwner, Observer {

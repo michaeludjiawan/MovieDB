@@ -10,9 +10,8 @@ import com.michaeludjiawan.moviedb.data.model.Movie
 import com.michaeludjiawan.moviedb.data.model.Review
 import com.michaeludjiawan.moviedb.data.safeApiCall
 import com.michaeludjiawan.moviedb.ui.movie.FilterType
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flow
 
 class MovieRepositoryImpl(
     private val apiService: ApiService,
@@ -25,10 +24,13 @@ class MovieRepositoryImpl(
             pagingSourceFactory = { MoviePagingSource(apiService, filter) }
         ).flow
 
-    override suspend fun getDetail(movieId: Int): Result<Movie> =
-        withContext(Dispatchers.IO) {
-            safeApiCall { apiService.getMovieDetail(movieId) }
-        }
+    override suspend fun getDetail(movieId: Int): Flow<Result<Movie>> = flow {
+        val saved = movieDao.getMovie(movieId)
+        saved?.let { emit(Result.Success(it)) }
+
+        val result = safeApiCall { apiService.getMovieDetail(movieId) }
+        emit(result)
+    }
 
     override fun getReview(movieId: Int): Flow<PagingData<Review>> =
         Pager(
