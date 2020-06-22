@@ -121,14 +121,14 @@ class MovieDetailFragment : BaseFragment() {
 
         viewModel.reviews.observe(viewLifecycleOwner, Observer {
             reviewJob?.cancel()
-            reviewJob = lifecycleScope.launch {
+            reviewJob = viewLifecycleOwner.lifecycleScope.launch {
                 reviewPagingAdapter.submitData(it)
             }
         })
     }
 
     private fun initFavorite() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             iv_movie_detail_fav.isSelected = viewModel.isFavorite()
         }
 

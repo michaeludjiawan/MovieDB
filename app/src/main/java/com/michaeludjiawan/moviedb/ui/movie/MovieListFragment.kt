@@ -115,7 +115,7 @@ class MovieListFragment : BaseFragment() {
             adapter = movieAdapter
         }
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             movieAdapter.dataRefreshFlow.collect {
                 rv_movie_list.scrollToPosition(0)
             }
@@ -136,7 +136,7 @@ class MovieListFragment : BaseFragment() {
 
     private fun getMovies(filterType: FilterType) {
         getMoviesJob?.cancel()
-        getMoviesJob = lifecycleScope.launch {
+        getMoviesJob = viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getMovies(filterType).collectLatest { movieAdapter.submitData(it) }
         }
     }
