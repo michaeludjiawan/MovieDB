@@ -56,6 +56,8 @@ class MovieDetailFragment : BaseFragment() {
         )
 
         reviewPagingAdapter.addLoadStateListener { loadState ->
+            if (isDetached) return@addLoadStateListener
+
             if (loadState.append.endOfPaginationReached) {
                 tv_movie_detail_review_label.text = getString(
                     if (reviewPagingAdapter.itemCount == 0) R.string.review_empty_label else R.string.review_exist_label

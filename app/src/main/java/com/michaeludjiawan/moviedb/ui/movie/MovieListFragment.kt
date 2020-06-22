@@ -67,6 +67,8 @@ class MovieListFragment : BaseFragment() {
         )
 
         movieAdapter.addLoadStateListener { loadState ->
+            if (isDetached) return@addLoadStateListener
+
             if (loadState.refresh !is LoadState.NotLoading) {
                 rv_movie_list.visibility = View.GONE
                 pb_movie_progress_bar.visibility = toVisibility(loadState.refresh is LoadState.Loading)
